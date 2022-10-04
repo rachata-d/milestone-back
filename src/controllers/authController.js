@@ -59,7 +59,7 @@ exports.login = async (req, res, next) => {
     if (!isUser) {
       throw new AppError("email or password is invalid", 400);
     }
-    const token = genToken({ id: user.id });
+    const token = genToken({ id: user.id, role: "USER" });
     res.status(200).json({ token });
   } catch (err) {
     next(err);
@@ -78,8 +78,8 @@ exports.adminLogin = async (req, res, next) => {
     if (!isAdmin) {
       throw new AppError("email or password is invalid", 400);
     }
-    const token = genToken({ id: admin.id });
-    res.status(200).json({ message: "welcome admin" });
+    const token = genToken({ id: admin.id, role: "ADMIN" });
+    res.status(200).json({ token });
   } catch (err) {
     next(err);
   }
@@ -87,4 +87,8 @@ exports.adminLogin = async (req, res, next) => {
 
 exports.getMe = (req, res) => {
   res.status(200).json({ user: req.user });
+};
+
+exports.getAdmin = (req, res) => {
+  res.status(200).json({ admin: req.admin });
 };
