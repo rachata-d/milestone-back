@@ -21,3 +21,12 @@ exports.createItem = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.getAllItems = async (req, res, next) => {
+  try {
+    const items = await Item.findAll();
+    res.status(200).json({ items });
+  } catch (err) {
+    next(err);
+  }
+};
