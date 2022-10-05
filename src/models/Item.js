@@ -16,6 +16,9 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: true,
         },
       },
+      picture: {
+        type: DataTypes.STRING,
+      },
       status: {
         type: DataTypes.ENUM("available", "sold", "display"),
         defaultValue: "available",
