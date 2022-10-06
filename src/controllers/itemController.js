@@ -1,5 +1,6 @@
 const { Item } = require("../models");
 const AppError = require("../utils/appError");
+const cloudinary = require("../utils/cloudinary");
 
 exports.createItem = async (req, res, next) => {
   try {
@@ -8,11 +9,14 @@ exports.createItem = async (req, res, next) => {
       throw new AppError("name is required", 400);
     }
 
+    const url = await cloudinary.upload(req.file.path);
+
     const item = await Item.create({
       name,
       description,
       categoryId,
       adminId: req.admin.id,
+      picture: url,
     });
 
     res.status(201).json({ item });
