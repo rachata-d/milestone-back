@@ -1,6 +1,7 @@
 const { Item } = require("../models");
 const AppError = require("../utils/appError");
 const cloudinary = require("../utils/cloudinary");
+const fs = require("fs");
 
 exports.createItem = async (req, res, next) => {
   try {
@@ -23,6 +24,10 @@ exports.createItem = async (req, res, next) => {
   } catch (err) {
     console.log(err);
     next(err);
+  } finally {
+    if (req.file) {
+      fs.unlinkSync(req.file.path);
+    }
   }
 };
 
