@@ -11,6 +11,7 @@ const authRoute = require("./src/routes/authRoute");
 const authenticateAdmin = require("./src/middlewares/authenticateAdmin");
 const itemRoute = require("./src/routes/itemRoute");
 const authenticate = require("./src/middlewares/authenticate");
+const lotRoute = require("./src/routes/lotRoute");
 
 app.use(cors());
 app.use(express.json());
@@ -19,6 +20,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/auth", authRoute);
 app.use("/post", authenticateAdmin, itemRoute);
 app.use("/items", itemRoute);
+app.use("/postlot", authenticateAdmin, lotRoute);
 
 const port = process.env.PORT || 8001;
 app.listen(8000, () => console.log(`server running on port: ${port}`));
