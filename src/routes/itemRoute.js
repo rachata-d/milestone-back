@@ -9,6 +9,8 @@ const router = express.Router();
 router
   .route("/")
   .post(upload.single("picture"), itemController.createItem)
-  .get(itemController.getAllItems);
+  .get(itemController.getAllItems)
+  .patch(itemController.updateItems);
+router.delete("/:id", itemController.deleteItem);
 
 module.exports = router;

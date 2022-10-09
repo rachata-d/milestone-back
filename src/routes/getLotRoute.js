@@ -4,6 +4,6 @@ const lotController = require("../controllers/lotController");
 
 const router = express.Router();
 
-router.route("/").post(lotController.createLot).patch(lotController.updateLot);
+router.route("/").get(lotController.getLot);
 
 module.exports = router;
