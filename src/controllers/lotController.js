@@ -10,7 +10,7 @@ exports.createLot = async (req, res, next) => {
       startingBid,
       auctionStart,
       auctionEnd,
-      winningBid,
+      // winningBid,
       status,
       itemId,
     } = req.body;
@@ -24,7 +24,6 @@ exports.createLot = async (req, res, next) => {
       startingBid,
       auctionStart,
       auctionEnd,
-      winningBid,
       status,
       itemId,
     });

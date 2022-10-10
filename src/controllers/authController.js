@@ -40,7 +40,7 @@ exports.register = async (req, res, next) => {
       password: hashedPassword,
     });
 
-    const token = genToken({ id: user.id });
+    const token = genToken({ id: user.id, role: "USER" });
     res.status(201).json({ token });
   } catch (err) {
     next(err);
