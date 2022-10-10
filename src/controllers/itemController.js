@@ -1,4 +1,4 @@
-const { Item, Lot, sequelize } = require("../models");
+const { Item, Lot, sequelize, Bid } = require("../models");
 const AppError = require("../utils/appError");
 const cloudinary = require("../utils/cloudinary");
 const fs = require("fs");
@@ -52,7 +52,11 @@ exports.deleteItem = async (req, res, next) => {
     if (!item) {
       throw new AppError("item doesn't exists", 400);
     }
-    await Lot.destroy({ where: { itemId: item.id }, transaction });
+    const lots = await Lot.findOne({ where: { itemId: +req.params.id } });
+    if (lots) {
+      await Bid.destroy({ where: { lotId: lots.id }, transaction });
+      await Lot.destroy({ where: { itemId: item.id }, transaction });
+    }
     await item.destroy({ transaction });
     await transaction.commit();
     res.status(200).json({ message: "successfully deleted" });

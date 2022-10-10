@@ -1,5 +1,6 @@
-const { Lot, Item } = require("../models");
+const { Lot, Item, Bid } = require("../models");
 const AppError = require("../utils/appError");
+const { Op } = require("sequelize");
 
 exports.createLot = async (req, res, next) => {
   try {
@@ -37,10 +38,15 @@ exports.createLot = async (req, res, next) => {
 exports.getLot = async (req, res, next) => {
   try {
     const lots = await Lot.findOne({
-      where: { status: "Ongoing" },
+      where: { status: { [Op.or]: ["Ongoing", "Pending"] } },
       include: Item,
     });
-    res.status(200).json({ lots });
+
+    const highestBid = await Bid.findOne({
+      where: { lotId: lots.id },
+      order: [["bids", "desc"]],
+    });
+    res.status(200).json({ lots, highestBid: highestBid?.bids });
   } catch (err) {
     next(err);
   }
