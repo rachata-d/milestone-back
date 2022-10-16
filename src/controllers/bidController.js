@@ -10,7 +10,6 @@ exports.createBid = async (req, res, next) => {
     res.status(201).json({ bid });
   } catch (err) {
     throw new AppError("Invalid creation", 400);
-    next(err);
   }
 };
 
